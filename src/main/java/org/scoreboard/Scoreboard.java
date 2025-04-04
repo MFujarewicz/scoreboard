@@ -21,6 +21,8 @@ public class Scoreboard {
     }
 
     public void startMatch(String homeTeam, String awayTeam) {
+        if (findIndex(homeTeam, awayTeam) != -1) throw new IllegalArgumentException("Match between " + homeTeam + " and " + awayTeam + " is already on scoreboard");
+
         matches.add(
                 new Match(homeTeam, awayTeam, 0, 0)
         );
