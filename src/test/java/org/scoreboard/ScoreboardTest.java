@@ -87,5 +87,51 @@ class ScoreboardTest {
                 "The matches with the same total score should be returned ordered by the most recently started match");
     }
 
+    @Test
+    void testWithMoreMatches() {
+
+        Scoreboard scoreboard = new Scoreboard();
+
+
+       String mexico = "Mexico";
+       String canada = "Canada";
+       String spain = "Spain";
+       String brazil = "Brazil";
+       String germany = "Germany";
+       String france = "France";
+       String uruguay = "Uruguay";
+       String italy = "Italy";
+       String argentina = "Argentina";
+       String australia = "Australia";
+
+        scoreboard.startMatch(mexico, canada);
+        scoreboard.setScore(mexico, canada, 0, 5);
+
+        scoreboard.startMatch(spain, brazil);
+        scoreboard.setScore(spain, brazil, 10, 2);
+
+        scoreboard.startMatch(germany, france);
+        scoreboard.setScore(germany, france, 2, 2);
+
+        scoreboard.startMatch(uruguay, italy);
+        scoreboard.setScore(uruguay, italy, 6, 6);
+
+        scoreboard.startMatch(argentina, australia);
+        scoreboard.setScore(argentina, australia, 3, 1);
+
+
+        assertArrayEquals(List.of(
+                        new Match(uruguay, italy, 6, 6),
+                        new Match(spain, brazil, 10, 2),
+                        new Match(mexico, canada, 0, 5),
+                        new Match(argentina, australia, 3, 1),
+                        new Match(germany, france, 2, 2)
+                ).toArray(new Match[0]),
+                scoreboard.getSummary().toArray(),
+                "Summary should be ordered by total score and recency");
+
+
+    }
+
 
 }
