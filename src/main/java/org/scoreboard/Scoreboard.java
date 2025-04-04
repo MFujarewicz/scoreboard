@@ -21,6 +21,10 @@ public class Scoreboard {
         }
     }
 
+    public void endMatch(String homeTeam, String awayTeam) {
+
+    }
+
     public void startMatch(String homeTeam, String awayTeam) {
         matches.add(
                 new Match(homeTeam, awayTeam, 0, 0)

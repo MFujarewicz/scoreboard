@@ -68,10 +68,10 @@ class ScoreboardTest {
         scoreboard.setScore(match3HT, match3AT, 2, 2);
 
         assertArrayEquals(List.of(
-                new Match(match2HT, match2AT, 3, 3),
-                new Match(match3HT, match3AT, 2, 2),
-                new Match(match1HT, match1AT, 1, 1)
-        ).toArray(new Match[0]),
+                        new Match(match2HT, match2AT, 3, 3),
+                        new Match(match3HT, match3AT, 2, 2),
+                        new Match(match1HT, match1AT, 1, 1)
+                ).toArray(new Match[0]),
                 scoreboard.getSummary().toArray(),
                 "Summary should be ordered by total score descending");
 
@@ -79,10 +79,10 @@ class ScoreboardTest {
         scoreboard.setScore(match3HT, match3AT, 1, 1);
 
         assertArrayEquals(List.of(
-                new Match(match2HT, match2AT, 3, 3),
-                new Match(match3HT, match3AT, 1, 1),
-                new Match(match1HT, match1AT, 1, 1)
-        ).toArray(new Match[0]),
+                        new Match(match2HT, match2AT, 3, 3),
+                        new Match(match3HT, match3AT, 1, 1),
+                        new Match(match1HT, match1AT, 1, 1)
+                ).toArray(new Match[0]),
                 scoreboard.getSummary().toArray(),
                 "The matches with the same total score should be returned ordered by the most recently started match");
     }
@@ -93,16 +93,16 @@ class ScoreboardTest {
         Scoreboard scoreboard = new Scoreboard();
 
 
-       String mexico = "Mexico";
-       String canada = "Canada";
-       String spain = "Spain";
-       String brazil = "Brazil";
-       String germany = "Germany";
-       String france = "France";
-       String uruguay = "Uruguay";
-       String italy = "Italy";
-       String argentina = "Argentina";
-       String australia = "Australia";
+        String mexico = "Mexico";
+        String canada = "Canada";
+        String spain = "Spain";
+        String brazil = "Brazil";
+        String germany = "Germany";
+        String france = "France";
+        String uruguay = "Uruguay";
+        String italy = "Italy";
+        String argentina = "Argentina";
+        String australia = "Australia";
 
         scoreboard.startMatch(mexico, canada);
         scoreboard.setScore(mexico, canada, 0, 5);
@@ -131,6 +131,40 @@ class ScoreboardTest {
                 "Summary should be ordered by total score and recency");
 
 
+    }
+
+    @Test
+    void endMatchTest() {
+
+        Scoreboard scoreboard = new Scoreboard();
+
+        String match1HT = "Mexico";
+        String match1AT = "Canada";
+
+        String match2HT = "Spain";
+        String match2AT = "Brazil";
+
+        String match3HT = "Germany";
+        String match3AT = "France";
+
+        scoreboard.startMatch(match1HT, match1AT);
+        scoreboard.startMatch(match2HT, match2AT);
+        scoreboard.startMatch(match3HT, match3AT);
+
+        scoreboard.setScore(match2HT, match2AT, 1, 2);
+
+        scoreboard.endMatch(match1HT, match1AT);
+        scoreboard.endMatch(match3HT, match3AT);
+
+
+        assertArrayEquals(List.of(
+                        new Match(match2HT, match2AT, 1, 2)
+                ).toArray(new Match[0]),
+                scoreboard.getSummary().toArray(),
+                "Summary should include only one last non removed match");
+
+        scoreboard.endMatch(match2HT, match2AT);
+        assertEquals(0, scoreboard.getSummary().size(), "all matches should be removed from scoreboard");
     }
 
 
