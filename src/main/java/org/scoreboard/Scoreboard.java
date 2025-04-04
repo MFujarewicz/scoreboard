@@ -1,6 +1,7 @@
 package org.scoreboard;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Scoreboard {
@@ -27,7 +28,10 @@ public class Scoreboard {
     }
 
     public List<Match> getSummary() {
-        return matches;
+        var matchesToSort = new ArrayList<>(matches);
+        matchesToSort.sort(Comparator.comparing(Match::totalScore));
+        return matchesToSort.reversed();
+
     }
 }
 
