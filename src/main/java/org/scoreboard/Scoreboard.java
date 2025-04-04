@@ -12,17 +12,12 @@ public class Scoreboard {
     }
 
     public void setScore(String homeTeam, String awayTeam, int newHomeTeamScore, int newAwayTeamScore) {
-        for (int i = 0; i < matches.size(); i++){
-            Match match = matches.get(i);
-            if (match.homeTeam().equals(homeTeam) && match.awayTeam().equals(awayTeam)){
-                matches.set(i, new Match(homeTeam, awayTeam, newHomeTeamScore, newAwayTeamScore));
-            }
-
-        }
+        int index = findIndexOrThrow(homeTeam, awayTeam);
+        matches.set(index, new Match(homeTeam, awayTeam, newHomeTeamScore, newAwayTeamScore));
     }
 
     public void endMatch(String homeTeam, String awayTeam) {
-        matches.remove(findIndex(homeTeam, awayTeam));
+        matches.remove(findIndexOrThrow(homeTeam, awayTeam));
     }
 
     public void startMatch(String homeTeam, String awayTeam) {
@@ -45,7 +40,16 @@ public class Scoreboard {
                 return i;
             }
         }
-        throw new RuntimeException("No active match for home team: " + homeTeam + ", away team: " + awayTeam);
+        return -1;
+    }
+
+    private int findIndexOrThrow(String homeTeam, String awayTeam){
+        int index = findIndex(homeTeam, awayTeam);
+
+        if (index != -1)
+            return index;
+        else
+            throw new IllegalArgumentException("No active match for home team: " + homeTeam + ", away team: " + awayTeam);
     }
 }
 
