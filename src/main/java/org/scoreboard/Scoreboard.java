@@ -11,6 +11,13 @@ public class Scoreboard {
     }
 
     public void setScore(String homeTeam, String awayTeam, int newHomeTeamScore, int newAwayTeamScore) {
+        for (int i = 0; i < matches.size(); i++){
+            Match match = matches.get(i);
+            if (match.homeTeam().equals(homeTeam) && match.awayTeam().equals(awayTeam)){
+                matches.set(i, new Match(homeTeam, awayTeam, newHomeTeamScore, newAwayTeamScore));
+            }
+
+        }
     }
 
     public void startMatch(String homeTeam, String awayTeam) {
