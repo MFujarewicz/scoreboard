@@ -22,7 +22,7 @@ public class Scoreboard {
     }
 
     public void endMatch(String homeTeam, String awayTeam) {
-
+        matches.remove(findIndex(homeTeam, awayTeam));
     }
 
     public void startMatch(String homeTeam, String awayTeam) {
@@ -36,6 +36,16 @@ public class Scoreboard {
         matchesToSort.sort(Comparator.comparing(Match::totalScore));
         return matchesToSort.reversed();
 
+    }
+
+    private int findIndex(String homeTeam, String awayTeam){
+        for (int i = 0; i < matches.size(); i++){
+            Match match = matches.get(i);
+            if (match.homeTeam().equals(homeTeam) && match.awayTeam().equals(awayTeam)){
+                return i;
+            }
+        }
+        throw new RuntimeException("No active match for home team: " + homeTeam + ", away team: " + awayTeam);
     }
 }
 
