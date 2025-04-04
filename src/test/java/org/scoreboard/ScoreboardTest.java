@@ -24,4 +24,24 @@ class ScoreboardTest {
                 scoreboard.getSummary().getFirst(),
                 "Match should have correct home and away teams, and be initialized to 0 - 0 score");
     }
+
+    @Test
+    void setScoreTest() {
+
+        Scoreboard scoreboard = new Scoreboard();
+
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+
+        scoreboard.startMatch(homeTeam, awayTeam);
+
+        scoreboard.setScore(homeTeam, awayTeam, 1, 2);
+
+        assertEquals(
+                new Match(homeTeam, awayTeam, 1, 2),
+                scoreboard.getSummary().getFirst(),
+                "Match should have updated score");
+    }
+
+
 }

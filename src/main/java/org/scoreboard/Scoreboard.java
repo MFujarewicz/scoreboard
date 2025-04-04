@@ -10,6 +10,8 @@ public class Scoreboard {
         matches = new ArrayList<Match>();
     }
 
+    public void setScore(String homeTeam, String awayTeam, int newHomeTeamScore, int newAwayTeamScore) {
+    }
 
     public void startMatch(String homeTeam, String awayTeam) {
         matches.add(
