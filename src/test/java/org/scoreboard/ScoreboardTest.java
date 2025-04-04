@@ -190,5 +190,61 @@ class ScoreboardTest {
         assertEquals(1, scoreboard.getSummary().size(), "Summary should include one match");
     }
 
+    @Test
+    void badEndMatch() {
+
+        String canada = "Canada";
+        String mexico = "Mexico";
+
+        Scoreboard scoreboard = new Scoreboard();
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    scoreboard.endMatch(canada, mexico);
+                },
+                "exception should be thrown when ending non-existent match"
+        );
+
+        scoreboard.startMatch(canada, mexico);
+        scoreboard.endMatch(canada, mexico);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    scoreboard.endMatch(canada, mexico);
+                },
+                "exception should be thrown when ending already ended match"
+        );
+    }
+
+    @Test
+    void badSetScore() {
+
+        String canada = "Canada";
+        String mexico = "Mexico";
+
+        Scoreboard scoreboard = new Scoreboard();
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    scoreboard.setScore(canada, mexico, 1, 2);
+                },
+                "exception should be thrown when setting score on non-existent match"
+        );
+
+
+        scoreboard.startMatch(canada, mexico);
+        scoreboard.endMatch(canada, mexico);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    scoreboard.setScore("Mexico", "Canada", 1, 2);
+                },
+                "exception should be thrown when setting score on ended match"
+        );
+    }
 
 }
