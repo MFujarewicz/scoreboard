@@ -167,5 +167,28 @@ class ScoreboardTest {
         assertEquals(0, scoreboard.getSummary().size(), "all matches should be removed from scoreboard");
     }
 
+    @Test
+    void duplicateMatchTest() {
+
+        Scoreboard scoreboard = new Scoreboard();
+
+        String mexico = "Mexico";
+        String canada = "Canada";
+
+        scoreboard.startMatch(mexico, canada);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    scoreboard.startMatch(mexico, canada);
+                },
+                "exception should be thrown when starting duplicate match"
+        );
+
+        scoreboard.setScore(mexico, canada, 1, 2);
+
+        assertEquals(1, scoreboard.getSummary().size(), "Summary should include one match");
+    }
+
 
 }
